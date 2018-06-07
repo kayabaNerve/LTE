@@ -56,13 +56,9 @@ void LED() {
 
     gpio_mode_setup(LEDHeader.RED_LED, GPIO_MODE_WIRED_AND, LEDHeader.RED_PIN);
     gpio_set(LEDHeader.RED_LED, LEDHeader.RED_PIN);
-    gpio_clear(LEDHeader.RED_LED, LEDHeader.RED_PIN);
-    gpio_toggle(LEDHeader.RED_LED, LEDHeader.RED_PIN);
 
     gpio_mode_setup(LEDHeader.GREEN_LED, GPIO_MODE_WIRED_AND, LEDHeader.GREEN_PIN);
     gpio_set(LEDHeader.GREEN_LED, LEDHeader.GREEN_PIN);
-    gpio_clear(LEDHeader.GREEN_LED, LEDHeader.GREEN_PIN);
-    gpio_toggle(LEDHeader.GREEN_LED, LEDHeader.GREEN_PIN);
 
     LEDHeader.greenLED = false;
     LEDHeader.redLED = false;
