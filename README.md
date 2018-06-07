@@ -27,4 +27,6 @@ To run it on a Tomu:
 - Find the generated .dfu file.
 - Run `dfu-util -D .\GENERATED_DFU.dfu` in a terminal.
 
-The samples are all C++ files, yet the headers are C, and guaranteed to work with C.
+All this code is C and guaranteed to work in C.
+If a sample has a C++ file extension, it means that sample and library works in C++.
+Not all libraries are guaranteed to work in C++.
