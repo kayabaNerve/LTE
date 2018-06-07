@@ -15,7 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Changed to not run Git, have GCC not use the GNU C/C++ language standard, and include the LTE include directory.
+# Changed to not run Git, specify the specs to fix a compiler bug, and have GCC include the LTE include directory.
 # The new changes are Copyright Luke Parker, as of 2018, and available under the MIT license.
 
 PACKAGE    = $(notdir $(realpath .))
@@ -42,16 +42,17 @@ LDSCRIPT   = ../tomu-efm32hg309.ld
 DBG_CFLAGS = -ggdb -g -DDEBUG -Wall
 DBG_LFLAGS = -ggdb -g -Wall
 CFLAGS     = $(ADD_CFLAGS) \
-             -Wall -Wextra \
-             -mcpu=cortex-m0plus -mfloat-abi=soft -mthumb \
-             -ffunction-sections -fdata-sections -fno-common \
-             -fomit-frame-pointer -Os \
-             -std=c11
-CXXFLAGS   = $(CFLAGS) -std=c++11 -fno-rtti -fno-exceptions
+			 -Wall -Wextra \
+			 -mcpu=cortex-m0plus -mfloat-abi=soft -mthumb \
+			 -specs=nano.specs -specs=nosys.specs \
+			 -ffunction-sections -fdata-sections -fno-common \
+			 -fomit-frame-pointer -Os \
+			 -std=gnu11
+CXXFLAGS   = $(CFLAGS) -std=gnu++11 -fno-rtti -fno-exceptions
 LFLAGS     = $(ADD_LFLAGS) $(CFLAGS) \
-             -nostartfiles \
-             -Wl,--gc-sections \
-             -Wl,--no-warn-mismatch,--script=$(LDSCRIPT),--build-id=none
+			 -nostartfiles \
+			 -Wl,--gc-sections \
+			 -Wl,--no-warn-mismatch,--script=$(LDSCRIPT),--build-id=none
 
 OBJ_DIR    = .obj
 
