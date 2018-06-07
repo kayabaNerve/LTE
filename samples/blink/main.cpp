@@ -11,11 +11,11 @@ void runEveryMilisecond() {
     if ((milliseconds % 5000) == 0) {
         on = !on;
         if (on) {
-            turnGreenOn();
-            turnRedOn();
+            turnGreenLEDOn();
+            turnRedLEDOn();
         } else {
-            turnGreenOff();
-            turnRedOff();
+            turnGreenLEDOff();
+            turnRedLEDOff();
         }
     }
 }
@@ -24,8 +24,8 @@ int main(int argc, char **argv) {
     (void) argc;
     (void) argv;
 
-    tomu();
-    led();
+    Tomu();
+    LED();
     setRun(&runEveryMilisecond);
 
     loop();

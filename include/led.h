@@ -3,67 +3,69 @@
 
 #include <stdbool.h>
 
-#include <libopencm3/cm3/common.h>
-#include <libopencm3/cm3/vector.h>
-#include <libopencm3/cm3/scb.h>
 #include <libopencm3/efm32/gpio.h>
 
-#define GREEN_LED GPIOA
-#define GREEN_PIN GPIO0
-#define RED_LED   GPIOB
-#define RED_PIN   GPIO7
+struct LEDHeaderStruct {
+    int GREEN_LED, GREEN_PIN, RED_LED, RED_PIN;
+    bool greenLED, redLED;
+} LEDHeader;
 
-bool greenLed = false;
-bool redLed = false;
-
-void toggleGreen() {
-    greenLed = !greenLed;
-    gpio_toggle(GREEN_LED, GREEN_PIN);
+void toggleGreenLED() {
+    LEDHeader.greenLED = !LEDHeader.greenLED;
+    gpio_toggle(LEDHeader.GREEN_LED, LEDHeader.GREEN_PIN);
 }
 
-void turnGreenOn() {
-    if (greenLed == true) {
+void turnGreenLEDOn() {
+    if (LEDHeader.greenLED == true) {
         return;
     }
-    toggleGreen();
+    toggleGreenLED();
 }
 
-void turnGreenOff() {
-    if (greenLed == false) {
+void turnGreenLEDOff() {
+    if (LEDHeader.greenLED == false) {
         return;
     }
-    toggleGreen();
+    toggleGreenLED();
 }
 
-void toggleRed() {
-    redLed = !redLed;
-    gpio_toggle(RED_LED, RED_PIN);
+void toggleRedLED() {
+    LEDHeader.redLED = !LEDHeader.redLED;
+    gpio_toggle(LEDHeader.RED_LED, LEDHeader.RED_PIN);
 }
 
-void turnRedOn() {
-    if (redLed == true) {
+void turnRedLEDOn() {
+    if (LEDHeader.redLED == true) {
         return;
     }
-    toggleRed();
+    toggleRedLED();
 }
 
-void turnRedOff() {
-    if (redLed == false) {
+void turnRedLEDOff() {
+    if (LEDHeader.redLED == false) {
         return;
     }
-    toggleRed();
+    toggleRedLED();
 }
 
-void led() {
-    gpio_mode_setup(RED_LED, GPIO_MODE_WIRED_AND, RED_PIN);
-    gpio_set(RED_LED, RED_PIN);
-    gpio_clear(RED_LED, RED_PIN);
-    gpio_toggle(RED_LED, RED_PIN);
+void LED() {
+    LEDHeader.GREEN_LED = GPIOA;
+    LEDHeader.GREEN_PIN = GPIO0;
+    LEDHeader.RED_LED = GPIOB;
+    LEDHeader.RED_PIN = GPIO7;
 
-    gpio_mode_setup(GREEN_LED, GPIO_MODE_WIRED_AND, GREEN_PIN);
-    gpio_set(GREEN_LED, GREEN_PIN);
-    gpio_clear(GREEN_LED, GREEN_PIN);
-    gpio_toggle(GREEN_LED, GREEN_PIN);
+    gpio_mode_setup(LEDHeader.RED_LED, GPIO_MODE_WIRED_AND, LEDHeader.RED_PIN);
+    gpio_set(LEDHeader.RED_LED, LEDHeader.RED_PIN);
+    gpio_clear(LEDHeader.RED_LED, LEDHeader.RED_PIN);
+    gpio_toggle(LEDHeader.RED_LED, LEDHeader.RED_PIN);
+
+    gpio_mode_setup(LEDHeader.GREEN_LED, GPIO_MODE_WIRED_AND, LEDHeader.GREEN_PIN);
+    gpio_set(LEDHeader.GREEN_LED, LEDHeader.GREEN_PIN);
+    gpio_clear(LEDHeader.GREEN_LED, LEDHeader.GREEN_PIN);
+    gpio_toggle(LEDHeader.GREEN_LED, LEDHeader.GREEN_PIN);
+
+    LEDHeader.greenLED = false;
+    LEDHeader.redLED = false;
 }
 
 #endif

@@ -15,7 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Changed to not run Git and have GCC include the LTE include directory.
+# Changed to not run Git, have GCC not use the GNU C/C++ language standard, and include the LTE include directory.
 # The new changes are Copyright Luke Parker, as of 2018, and available under the MIT license.
 
 PACKAGE    = $(notdir $(realpath .))
@@ -46,7 +46,7 @@ CFLAGS     = $(ADD_CFLAGS) \
              -mcpu=cortex-m0plus -mfloat-abi=soft -mthumb \
              -ffunction-sections -fdata-sections -fno-common \
              -fomit-frame-pointer -Os \
-             -std=gnu11
+             -std=c11
 CXXFLAGS   = $(CFLAGS) -std=c++11 -fno-rtti -fno-exceptions
 LFLAGS     = $(ADD_LFLAGS) $(CFLAGS) \
              -nostartfiles \
