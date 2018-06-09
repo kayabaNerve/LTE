@@ -1,6 +1,3 @@
-#ifndef LTE_TOMU
-#define LTE_TOMU
-
 #include <stddef.h>
 
 #include <libopencm3/cm3/common.h>
@@ -15,6 +12,7 @@ TOBOOT_CONFIGURATION(0);
 
 struct TomuHeaderStruct {
     void (*run)();
+    bool end;
 } TomuHeader;
 
 void setRun(void (*runArg)()) {
@@ -22,13 +20,14 @@ void setRun(void (*runArg)()) {
 }
 
 void sys_tick_handler() {
-    if (TomuHeader.run != NULL) {
+    if ((TomuHeader.run != NULL) && (TomuHeader.end == false)) {
         (*TomuHeader.run)();
     }
 }
 
 void Tomu() {
     TomuHeader.run = NULL;
+    TomuHeader.end = false;
 
     WDOG_CTRL = 0;
 
@@ -49,4 +48,6 @@ void loop() {
     while (true);
 }
 
-#endif
+void end() {
+    TomuHeader.end = true;
+}

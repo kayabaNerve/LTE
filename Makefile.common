@@ -15,12 +15,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Changed to not run Git, specify the specs to fix a compiler bug, and have GCC include the LTE include directory.
+# Changed to not run Git, specify the specs to fix a compiler bug, and have GCC include/compile the LTE c directory.
 # The new changes are Copyright Luke Parker, as of 2018, and available under the MIT license.
 
 PACKAGE    = $(notdir $(realpath .))
 OPENCM3   ?= ../libopencm3
-ADD_CFLAGS = -I$(OPENCM3)/include -I../include -DEFM32HG -I../LTE/include -DEFM32HG
+ADD_CFLAGS = -I$(OPENCM3)/include -I../include -DEFM32HG -I../LTE/c -DEFM32HG #-IPATH_TO_YOUR_NIM/lib
 ADD_LFLAGS = -L$(OPENCM3)/lib -lopencm3_efm32hg
 
 TRGT      ?= arm-none-eabi-
@@ -55,14 +55,17 @@ LFLAGS     = $(ADD_LFLAGS) $(CFLAGS) \
 			 -Wl,--no-warn-mismatch,--script=$(LDSCRIPT),--build-id=none
 
 OBJ_DIR    = .obj
+LTE_DIR    = ../LTE/c
 
 CSOURCES   = $(wildcard *.c)
+LTESOURCES = $(wildcard $(LTE_DIR)/*.c)
 CPPSOURCES = $(wildcard *.cpp)
 ASOURCES   = $(wildcard *.S)
 COBJS      = $(addprefix $(OBJ_DIR)/, $(notdir $(CSOURCES:.c=.o)))
+LTEOBJS    = $(addprefix $(OBJ_DIR)/, $(notdir $(LTESOURCES:.c=.o)))
 CXXOBJS    = $(addprefix $(OBJ_DIR)/, $(notdir $(CPPSOURCES:.cpp=.o)))
 AOBJS      = $(addprefix $(OBJ_DIR)/, $(notdir $(ASOURCES:.S=.o)))
-OBJECTS    = $(COBJS) $(CXXOBJS) $(AOBJS)
+OBJECTS    = $(COBJS) $(LTEOBJS) $(CXXOBJS) $(AOBJS)
 VPATH      = .
 
 QUIET      = @
@@ -102,6 +105,10 @@ $(OBJ_DIR):
 	$(QUIET) mkdir $(OBJ_DIR)
 
 $(COBJS) : $(OBJ_DIR)/%.o : %.c Makefile
+	$(QUIET) echo "  CC       $<	$(notdir $@)"
+	$(QUIET) $(CC) -c $< $(CFLAGS) -o $@ -MMD
+
+$(LTEOBJS) : $(OBJ_DIR)/%.o : $(LTE_DIR)/%.c Makefile
 	$(QUIET) echo "  CC       $<	$(notdir $@)"
 	$(QUIET) $(CC) -c $< $(CFLAGS) -o $@ -MMD
 

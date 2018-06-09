@@ -1,6 +1,3 @@
-#ifndef LTE_SERIAL
-#define LTE_SERIAL
-
 #include <stdlib.h>
 #include <string.h>
 
@@ -280,5 +277,3 @@ void Serial() {
     usbd_register_set_config_callback(SerialHeader.usbDevice, cdcacmConfig);
     nvic_enable_irq(NVIC_USB_IRQ);
 }
-
-#endif
