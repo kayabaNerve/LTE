@@ -6,7 +6,7 @@
 #include <Serial.h>
 
 bool connected = false;
-void runEveryMilisecond() {
+void runEveryMillisecond() {
     if ((serialConnected()) && (connected == false)) {
         connected = true;
         sendSerial("What is my favorite fruit?\r\n> ");
@@ -17,6 +17,7 @@ void runEveryMilisecond() {
             turnRedLEDOff();
             turnGreenLEDOn();
             sendSerial("Correct!");
+            end();
         } else {
             turnRedLEDOn();
             sendSerial("Try again!\r\n> ");
@@ -29,7 +30,7 @@ int main() {
     LED();
     Serial();
 
-    setRun(&runEveryMilisecond);
+    setRun(&runEveryMillisecond);
 
     loop();
 }

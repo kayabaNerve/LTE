@@ -5,7 +5,7 @@
 
 uint32_t milliseconds = 0;
 bool on = false;
-void runEveryMilisecond() {
+void runEveryMillisecond() {
     milliseconds++;
 
     if ((milliseconds % 5000) == 0) {
@@ -23,7 +23,7 @@ void runEveryMilisecond() {
 int main() {
     Tomu();
     LED();
-    setRun(&runEveryMilisecond);
+    setRun(&runEveryMillisecond);
 
     loop();
 }
