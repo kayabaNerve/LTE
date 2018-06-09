@@ -40,7 +40,7 @@ If it is your first time compiling, edit Makefile.common. Line 23 has a commente
 - EITHER
 - Copy the compile script for your OS from Base and run it (these will delete all generated files, except for the .dfu target, including \*.c).
 - OR
-- Compile the Nim with `nim c --forceBuild --os:standalone --cpu:arm --gc:none --compileOnly --path:..\LTE\nim --define:release .\main.nim`.
+- Compile the Nim code with `nim c --forceBuild --os:standalone --cpu:arm --gc:none --compileOnly --path:..\LTE\nim --define:release .\main.nim`.
 - Move all the generated C code from nimcache/ to your project folder.
 - Run make.
 
