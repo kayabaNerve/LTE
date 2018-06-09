@@ -49,6 +49,4 @@ To run it on a Tomu:
 - Find the generated .dfu file.
 - Run `dfu-util -D .\GENERATED_DFU.dfu` in a terminal.
 
-All of the headers are C and guaranteed to work in C and Nim.
-If a C sample has a C++ file extension, it means that sample works in C++.
-Not all headers are guaranteed to work in C++.
+All of the headers are C and guaranteed to work in both C and Nim.
